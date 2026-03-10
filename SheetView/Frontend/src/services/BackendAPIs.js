@@ -87,10 +87,10 @@ export const uploadSingleFile = (file, uploadedBy, description = "", folder = "r
   formData.append("description", description);
   formData.append("folder", folder);
 
-  return axios.post(`${BASE_URL}/file/single`, formData,{name:"Aaditya"});
+  return axios.post(`${BASE_URL}/file/uploadSingle`, formData,{name:"Aaditya"});
 };
 
-// ===============================
+// ===============================  
 // UPLOAD MULTIPLE FILES
 // files: array of File objects e.g. from input[multiple]
 // ===============================
@@ -128,3 +128,12 @@ export const getFileById = (fileId) =>
 // ===============================
 export const deleteFile = (fileId) =>
   axios.delete(`${BASE_URL}/upload/${fileId}`);
+
+
+
+
+export function serverDownloadUrl(fileId) {
+  return `${API_BASE}/file/files/${fileId}`; // use /file/files/:id based on your backend
+}
+
+

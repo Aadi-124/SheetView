@@ -15,15 +15,12 @@ const upload = multer({
 
 
 
-
 // ===============================
 // UPLOAD SINGLE FILE
 // POST /upload/single
 // Body: form-data { file: <file>, uploadedBy: "username" }
 // ===============================
 router.post("/single", upload.single("file"), async (req, res) => {
-  console.log("I am here!");
-  console.log(req.file);  
 
   try {
     if (!req.file) {
@@ -39,6 +36,8 @@ router.post("/single", upload.single("file"), async (req, res) => {
       data:         req.file.buffer,        // binary stored in MongoDB
       uploadedBy:   "anonymous",
     });
+
+    console.log("savedFile._id = "+savedFile._id);
 
     return res.status(201).json({
       message: "File uploaded to MongoDB successfully",
@@ -57,6 +56,13 @@ router.post("/single", upload.single("file"), async (req, res) => {
   }
 });
 
+
+
+
+
+router.get("/get-file",(req,res)=>{
+  
+});
 
 
 
@@ -164,3 +170,126 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+//===============================================================================================================
+// POSTGRESQL DATABASE INTEGRATION
+//===============================================================================================================
+
+// Multer memory storage: keeps uploaded file in RAM (good for small/medium files)
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   // ssl: { rejectUnauthorized: false } // enable if your DB requires SSL (cloud)
+// });
+
+// // Helper: hash buffer -> sha256 hex
+// function sha256Hex(buffer) {
+//   return crypto.createHash('sha256').update(buffer).digest('hex');
+// }
+
+// /**
+//  * POST /uploadSingle
+//  * Form field name must be: "file"
+//  * Stores the file directly in Postgres (BYTEA) with metadata.
+//  */
+// app.post('/uploadSingle', upload.single('file'), async (req, res) => {
+//   if (!req.file) return res.status(400).json({ error: 'file is required (form field name: "file")' });
+
+//   const { originalname, mimetype, size, buffer } = req.file;
+//   const sha256 = sha256Hex(buffer);
+//   const id = randomUUID();
+
+//   const client = await pool.connect();
+//   try {
+//     await client.query('BEGIN');
+
+//     // If you want deduplication by hash, check here:
+//     const existing = await client.query(
+//       'SELECT id FROM files WHERE sha256 = $1 LIMIT 1',
+//       [sha256]
+//     );
+//     if (existing.rowCount > 0) {
+//       await client.query('ROLLBACK');
+//       return res.status(200).json({
+//         message: 'Duplicate file detected; returning existing record',
+//         id: existing.rows[0].id,
+//         duplicateOf: existing.rows[0].id,
+//       });
+//     }
+
+//     // Insert file bytes and metadata
+//     await client.query(
+//       `INSERT INTO files (id, original_name, mime_type, size_bytes, sha256, data)
+//        VALUES ($1, $2, $3, $4, $5, $6)`,
+//       [id, originalname, mimetype || 'application/octet-stream', size, sha256, buffer]
+//     );
+
+//     await client.query('COMMIT');
+
+//     return res.status(201).json({
+//       id,
+//       originalName: originalname,
+//       mimeType: mimetype,
+//       sizeBytes: size,
+//       sha256,
+//       message: 'File stored in PostgreSQL successfully',
+//       downloadUrl: `/files/${id}`,
+//     });
+//   } catch (err) {
+//     await client.query('ROLLBACK');
+//     console.error('Upload error:', err);
+//     return res.status(500).json({ error: 'Failed to store file' });
+//   } finally {
+//     client.release();
+//   }
+// });
+
+// /**
+//  * GET /files/:id
+//  * Streams the file back to the client from BYTEA.
+//  */
+// app.get('/files/:id', async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const { rows } = await pool.query(
+//       'SELECT original_name, mime_type, size_bytes, data FROM files WHERE id = $1',
+//       [id]
+//     );
+//     if (rows.length === 0) return res.status(404).json({ error: 'Not found' });
+
+//     const file = rows[0];
+
+//     res.setHeader('Content-Type', file.mime_type);
+//     res.setHeader('Content-Length', file.size_bytes);
+//     // Change "attachment" -> "inline" if you want to preview in browser (e.g., PDFs/images)
+//     res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(file.original_name)}"`);
+
+//     return res.end(file.data); // Send the buffer
+//   } catch (e) {
+//     console.error('Download error:', e);
+//     return res.status(500).json({ error: 'Failed to fetch file' });
+//   }
+// });
+
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//   console.log(`Server running → http://localhost:${port}`);
+//   console.log(`POST   /uploadSingle  (form-data field: file)`);
+//   console.log(`GET    /files/:id     (download)`);
+// });
+
+
+
+
+
+

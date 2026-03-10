@@ -67,43 +67,38 @@
 // export default Index;
 import { useState } from "react";
 import NavBar from "../components/NavBar.jsx";
-import FileUpload from "@/components/FileUpload";
+import FileUpload  from "@/components/FileUpload.js";
 import UniversalViewer from "@/components/UniversalViewer";
 
 const Index = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [serverMeta, setServerMeta] = useState<any>(null);
-
+  console.log("Stored AUTH = "+sessionStorage.getItem("app.auth"));
   return (
     <div className="">
       <NavBar />
 
       {/* Upload view (shown until a file is uploaded) */}
-      {!uploadedFile && (
+      {/* {!uploadedFile && (
         <div
           className="rounded-xl border border-border bg-card p-2 shadow-card"
-          style={{ border: "2px solid red", height: "100vh" }}
+          style={{height: "100vh" }}
         >
           <FileUpload
             onUploadComplete={(file, meta) => {
               setUploadedFile(file);
               setServerMeta(meta);
             }}
-            // accept="*/*" // keep generic; viewer will decide how to open it
           />
         </div>
-      )}
-
+      )} */}
+    <FileUpload/>
       {/* Viewer area (shows after upload) */}
       {uploadedFile && (
         <div className="h-[100vh] rounded-xl border border-border bg-card shadow-card">
-          <UniversalViewer file={uploadedFile} />
+          {/* <UniversalViewer file={uploadedFile} /> */}
         </div>
       )}
-
-      <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
-        Excel Viewer & Editor — Built with FastAPI + React
-      </footer>
     </div>
   );
 };
