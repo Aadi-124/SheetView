@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 
-import ExcelEditor from "@/components/editors/ExcelEditor.tsx";
-import WordEditor from "@/components/editors/WordEditor.tsx";
-import CodeEditor from "@/components/editors/CodeEditor.tsx";
-import ImageViewer from "@/components/editors/ImageViewer.tsx";
+import ExcelEditor from "@/components/Editors/ExcelEditor.tsx";
+import WordEditor from "@/components/Editors/WordEditor.tsx";
+import CodeEditor from "@/components/Editors/CodeEditor.tsx";
+import ImageViewer from "@/components/Editors/ImageViewer.tsx";
 import PDFViewer from "./Editors/PdfViewer.tsx";
 
 import { getFile } from "@/services/BackendAPIs";
