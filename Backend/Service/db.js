@@ -188,6 +188,16 @@ async function initDB() {
       );
     `);
 
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS "Document" (
+        id VARCHAR(255) PRIMARY KEY NOT NULL,
+        title VARCHAR(255) NOT NULL DEFAULT 'Untitled Document',
+        content JSONB,
+        "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+        "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL
+        );
+      `);
+
     // FOLDERS TABLE
     await pool.query(`
       CREATE TABLE IF NOT EXISTS folders (

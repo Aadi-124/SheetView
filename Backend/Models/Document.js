@@ -59,3 +59,4 @@ const Document = sequelize.define("Document", {
 });
 
 module.exports = Document;
+  
