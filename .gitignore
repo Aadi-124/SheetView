@@ -1,0 +1,44 @@
+# Ignore node.js dependencies
+node_modules/
+
+# Ignore build and output directories
+dist/
+build/
+out/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore environment variables
+.env
+.env.local
+.env.*.local
+
+# Ignore log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignore coverage reports
+coverage/
+
+# Ignore IDE/editor settings
+.vscode/
+.idea/
+*.swp
+
+# Ignore compiled code
+*.class
+*.pyc
+*.pyo
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore package locks (optional, depending on workflow)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
