@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-// const API_BASE = "http://127.0.0.1:3000";
+// const BASE_URL = "http://127.0.0.1:3000";
 const BASE_URL = "http://localhost:3000";
 
 const api = axios.create({
@@ -54,13 +54,13 @@ export const uploadFile = async (file) => {
  
   formData.append("file", file);
   
-  const res = await axios.post(`${API_BASE}/upload`, formData);
+  const res = await axios.post(`${BASE_URL}/upload`, formData);
 
   return res.data;
 };
 
 export const fetchData = async (page = 1, page_size = 100) => {
-  const res = await axios.get(`${API_BASE}/data`, {
+  const res = await axios.get(`${BASE_URL}/data`, {
     params: { page, page_size },
   });
   return res.data;
@@ -187,12 +187,12 @@ export const listUserFolders = () => {
 
 
 export const getFile = (fileId)=>{
-  return axios.get(`${API_BASE}/files/files/${fileId}`);
+  return axios.get(`${BASE_URL}/files/files/${fileId}`);
 }
 
 export function serverDownloadUrl(fileId) {
   
-  return axios.get(`${API_BASE}/files/files/${fileId}`, {
+  return axios.get(`${BASE_URL}/files/files/${fileId}`, {
     responseType: "blob", // 👈 IMPORTANT
     // If you require cookies/sessions:
     // withCredentials: true,

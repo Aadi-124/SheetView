@@ -31,7 +31,7 @@ const fabric: any =
 // Only zoom with Ctrl/Cmd + wheel (like GDrive). Set false to zoom on plain wheel.
 const WHEEL_ZOOM_REQUIRES_MODIFIER = true;
 
-export default function GlamPDFStudio({ file: initialFile }: { file?: File }) {
+export default function PDFViewer({ file: initialFile }: { file?: File }) {
   // Core state
   const [file, setFile] = useState<File | null>(initialFile ?? null);
   const [pdfDoc, setPdfDoc] = useState<any>(null);
