@@ -4,11 +4,15 @@ const { Server } = require('socket.io');
 const { Sequelize, DataTypes } = require('sequelize');
 
 // --- Database Setup ---
-const sequelize = new Sequelize('shared_docs', 'postgres', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
+// const sequelize = new Sequelize('shared_docs', 'postgres', 'password', {
+//   host: 'localhost',
+//   dialect: 'postgres',
+// });
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+  logging: false,
+  pool: { max: 5, min: 0, acquire: 30000, idle: 10000 },
 });
-
 // --- Document Model ---
 const Document = sequelize.define('Document', {
   id: {
