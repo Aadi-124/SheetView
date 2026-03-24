@@ -5,7 +5,7 @@ import ExcelEditor from "@/components/editors/ExcelEditor";
 import WordEditor from "@/components/editors/WordEditor";
 import CodeEditor from "@/components/editors/CodeEditor";
 import ImageViewer from "@/components/editors/ImageViewer";
-import PDFViewer from "./Editors/PdfViewer";
+import PDFViewer from "./editors/PdfViewer";
 
 import { getFile } from "@/services/BackendAPIs";
 
